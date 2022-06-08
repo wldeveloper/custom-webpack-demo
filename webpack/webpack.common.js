@@ -1,6 +1,5 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { getAbsPath } = require('./utils');
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -81,6 +80,7 @@ const commonConfig = {
     path: getAbsPath('./dist'),
     assetModuleFilename: 'media/[hash:10][ext][query]',
     globalObject: 'this',
+    clean: true, // 构建前清理输出所在文件夹
   },
   module: {
     rules: [
@@ -161,8 +161,10 @@ const commonConfig = {
       React: 'react',
       Fragment: ['react', 'Fragment'],
     }),
-    new CleanWebpackPlugin(),
   ],
+  optimization: {
+    runtimeChunk: 'single', // 当单个HTML页面有多个入口时，添加该配置，否则可能会产生问题，作用是将webpack runtime代码提取到单独bundle
+  },
 };
 
 module.exports = {

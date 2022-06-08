@@ -15,10 +15,11 @@ const config = {
     filename: 'app.js',
     chunkFilename: '[id].js', // import()导入的模块
   },
-  devServer: {
+  devServer: { // webpack-der-server 在内存中访问资源地址 http://[devServer.host]:[devServer.port]/[output.publicPath]/[output.filename]
     'static': {
       directory: getAbsPath('./dist'),
     },
+    // open: true,
     // historyApiFallback: {
     //   rewrites: [{ from: /.*/, to: '/index.html' }]
     // },

@@ -11,10 +11,10 @@ const config = {
   entry: getAbsPath('./src/index.js'),
   output: {
     publicPath: '//', // 本地开发和打包时会动态替换
-    filename: 'js/[name].[chunkhash:10].js',
-    chunkFilename: 'js/[chunkhash:10].js', // import()导入的模块
+    filename: 'js/[name].[contenthash:10].js',
+    chunkFilename: 'js/[contenthash:10].js', // import()导入的模块
   },
-  externals: { // 可将下面所列库作为外部依赖，从生成的bundle中剔除出去
+  /* externals: { // 可将下面所列库作为外部依赖，从生成的bundle中剔除出去
     '@ant-design/icons/lib/dist': 'AntDesignIcons',
     antd: 'antd',
     'antd-mobile': `window['antd-mobile']`,
@@ -24,12 +24,12 @@ const config = {
     'react-dom': 'ReactDOM',
     'react-router-dom': 'ReactRouterDOM',
     'react-custom-scrollbars': 'ReactCustomScrollbars',
-  },
+  }, */
   optimization: {
-    runtimeChunk: 'single',
+    moduleIds: 'deterministic', // 保证第三方vendor bundle未改变时多次打包的hash一致
     splitChunks: {
       cacheGroups: {
-        vendor: {
+        vendor: { // 提取node_modules下第三方模块，此时webpack runtime代码应该在主bundle中
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           chunks: 'all'
