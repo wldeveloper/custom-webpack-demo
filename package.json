@@ -7,6 +7,7 @@
   "scripts": {
     "build": "webpack --node-env production",
     "build:pre": "webpack --node-env production --env pre",
+    "build:analyze": "webpack --node-env production --env analyze",
     "start": "webpack serve"
   },
   "keywords": [],
@@ -41,6 +42,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   }

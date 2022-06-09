@@ -64,26 +64,22 @@ const config = {
       }),
     ],
   }, */
-};
-
-module.exports = (env, argv) => {
-  const prodConfig = merge(commonConfig, config, {
-    devtool: env.pre ? 'inline-source-map' : 'hidden-source-map', // 区别生产和预发布
-  });
-  const plugins = [
+  plugins: [
     // 作用域提升, 可能可以使打包后的体积更小
     new webpack.optimize.ModuleConcatenationPlugin(),
     new MiniCssExtractPlugin({
       filename: `css/[name].[contenthash:10].css`,
       chunkFilename: `css/[contenthash:10].css`,
     }),
-  ];
-  if (env.analyse) {
-    plugins.push(new BundleAnalyzerPlugin({
+  ],
+};
+
+module.exports = (env, argv) => {
+  return merge(commonConfig, config, {
+    devtool: env.pre ? 'inline-source-map' : 'hidden-source-map', // 区别生产和预发布
+    plugins: [env.analyze && new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       openAnalyzer: false,
-    }));
-  }
-  prodConfig.plugins.push.apply(null, plugins);
-  return prodConfig;
+    })].filter(Boolean),
+  });
 };
