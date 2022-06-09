@@ -3,14 +3,12 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { merge } = require('webpack-merge');
 const { commonConfig } = require('./webpack.common');
-const { getAbsPath } = require('./utils');
 
 const config = {
   mode: 'production',
   bail: true,
-  entry: getAbsPath('./src/index.js'),
   output: {
-    publicPath: '//', // 本地开发和打包时会动态替换
+    publicPath: '/', // 本地开发和打包时会动态替换
     filename: 'js/[name].[contenthash:10].js',
     chunkFilename: 'js/[contenthash:10].js', // import()导入的模块
   },
@@ -26,10 +24,11 @@ const config = {
     'react-custom-scrollbars': 'ReactCustomScrollbars',
   }, */
   optimization: {
+    runtimeChunk: 'single', // 当单个HTML页面有多个入口时，添加该配置（开发环境也需要），否则可能会产生问题，作用是将webpack runtime代码提取到单独bundle
     moduleIds: 'deterministic', // 保证第三方vendor bundle未改变时多次打包的hash一致
     splitChunks: {
-      cacheGroups: {
-        vendor: { // 提取node_modules下第三方模块，此时webpack runtime代码应该在主bundle中
+      cacheGroups: { // default 选项是抽取重复用到的模块
+        vendor: { // 提取node_modules下第三方模块
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           chunks: 'all'
