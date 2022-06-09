@@ -25,17 +25,14 @@ const config = {
     //   'Access-Control-Allow-Origin': '*',
     // },
   },
+  plugins: [
+    // react webpack 热更新
+    new ReactRefreshWebpackPlugin(),
+    // 跳过编译时出错的代码
+    new webpack.NoEmitOnErrorsPlugin(),
+  ],
 };
 
 module.exports = (env, argv) => {
-  const devConfig = merge(commonConfig, config);
-  const plugins = [
-    // webpack热更新
-    // new ReactRefreshWebpackPlugin(),
-    // 跳过编译时出错的代码
-    new webpack.NoEmitOnErrorsPlugin(),
-  ];
-  // TODO
-  // devConfig.plugins.push.apply(null, plugins);
-  return devConfig;
+  return merge(commonConfig, config);
 };

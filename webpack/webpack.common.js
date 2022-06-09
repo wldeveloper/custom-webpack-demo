@@ -94,9 +94,9 @@ const commonConfig = {
         use: [
           {
             loader: require.resolve('babel-loader'),
-            /* options: {
+            options: {
               plugins: [!isProd && require.resolve('react-refresh/babel')].filter(Boolean),
-            }, */
+            },
           },
         ],
         exclude: /node_modules/,
