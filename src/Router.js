@@ -1,1 +1,2 @@
-export default faker = () => console.log('hello world');
+const faker = () => console.log('hello world');
+export default faker;

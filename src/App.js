@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import ReactTestModule from '@bashihui/react-test-module';
 import logo from './logo.svg';
 import './App.css';
 import faker from './Router';
@@ -12,6 +13,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <div>hello3</div>
         <div>hello2</div>
+        <ReactTestModule name="wl" age={31} />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
